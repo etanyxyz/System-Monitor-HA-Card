@@ -9,6 +9,8 @@ automations)? Install the companion
 [System Monitor integration](https://github.com/etanyxyz/System-Monitor-HA-Integration).
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
+[![Release](https://img.shields.io/github/v/release/etanyxyz/System-Monitor-HA-Card)](https://github.com/etanyxyz/System-Monitor-HA-Card/releases)
+[![License](https://img.shields.io/github/license/etanyxyz/System-Monitor-HA-Card)](LICENSE)
 
 ![Resource Monitor Card](images/preview.png)
 
@@ -22,29 +24,34 @@ automations)? Install the companion
 ## Requirements
 
 A running [System Monitor](https://github.com/etanyxyz/System-Monitor) instance
-reachable from your browser:
+reachable from your browser. The monitor is built from source — it has no
+published image:
 
 ```bash
-docker run -d --name resource-monitor -p 1010:1010 \
-  -v /var/run/docker.sock:/var/run/docker.sock:ro --group-add "$(getent group docker | cut -d: -f3)" \
-  --read-only --tmpfs /tmp --cap-drop ALL --security-opt no-new-privileges:true \
-  ghcr.io/etanyxyz/system-monitor   # or build from the System-Monitor repo
+git clone https://github.com/etanyxyz/System-Monitor.git
+cd System-Monitor
+docker compose up -d --build     # hardened container, port 1010
 ```
 
-The monitor must be version **0.1.0 or newer** — older builds do not send CORS
-headers, so the browser cannot read the API from a Home Assistant dashboard.
+Check it answers `http://<host>:1010/api/system` in the browser first.
+
+The monitor must be a build that includes the CORS middleware (every commit
+since the Home Assistant support landed) — older builds send no CORS headers,
+so the browser cannot read the API from a dashboard. Rebuild with
+`docker compose up -d --build` after pulling.
 
 ## Installation
 
-### HACS (recommended)
+### Marketplace (Home Assistant 2026.11+) / HACS
 
-1. HACS → three-dot menu → **Custom repositories**
-2. Add `https://github.com/etanyxyz/System-Monitor-HA-Card` with category **Dashboard**
-3. Install **Resource Monitor Card**, then reload your dashboard (hard-refresh
-   the browser with Ctrl/Cmd+Shift+R so the new resource is picked up)
-
-Marketplace: add `https://github.com/etanyxyz/System-Monitor-HA-Card` with
-category **Dashboard** instead.
+1. Add `https://github.com/etanyxyz/System-Monitor-HA-Card` as a custom
+   repository with category **Dashboard**:
+   - **Marketplace**: Settings → Marketplace → repositories → add from link
+   - **HACS**: HACS → three-dot menu → **Custom repositories**
+2. Install **Resource Monitor Card**. The store registers the dashboard
+   resource itself (versioned URL, so updates are picked up).
+3. Reload your dashboard; hard-refresh the browser (Ctrl/Cmd+Shift+R) the
+   first time so the new resource is loaded.
 
 ### Manual
 
