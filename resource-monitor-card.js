@@ -28,6 +28,8 @@
 (() => {
   "use strict";
 
+  const CARD_VERSION = "0.1.1";
+
   if (customElements.get("resource-monitor-card")) return;
 
   // ---------------------------------------------------------------------------
@@ -508,9 +510,10 @@
       const m = system.memory || {};
       const memPct = m.percent ?? null;
       const memColor = usageColor(memPct);
+      const swapTotal = m.swap_total_bytes ?? 0;
       const swapPct = m.swap_percent != null ? Math.min(100, Math.max(0, m.swap_percent)) : 0;
-      const swapLabel = (m.swap_total_bytes ?? 0) > 0
-        ? `swap ${humanBytes(m.swap_used_bytes)} / ${humanBytes(m.swap_total_bytes)}`
+      const swapLabel = swapTotal > 0
+        ? `swap ${humanBytes(m.swap_used_bytes)} / ${humanBytes(swapTotal)}`
         : "swap disabled";
 
       return `<div class="main">
@@ -538,9 +541,11 @@
           </div>
           <div class="swap-row">
             <span class="sub">${swapLabel}</span>
-            <div class="bar">
-              <div class="fill" style="width:${swapPct}%; background:var(--rm-accent)"></div>
-            </div>
+            ${swapTotal > 0
+              ? `<div class="bar">
+                   <div class="fill" style="width:${swapPct}%; background:var(--rm-accent)"></div>
+                 </div>`
+              : ""}
           </div>
         </div>
       </div>
@@ -752,6 +757,10 @@
   // the form above instead of the YAML editor.
   ResourceMonitorCard.getConfigElement = () =>
     document.createElement(CONFIG_TAG);
+
+  // Visible in the browser console so it is obvious which copy is loaded
+  // after a cache-busting update.
+  console.info(`Resource Monitor Card ${CARD_VERSION}`);
 
   window.customCards = window.customCards || [];
   window.customCards.push({
