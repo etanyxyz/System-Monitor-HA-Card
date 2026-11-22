@@ -427,12 +427,17 @@
       let containers = null;
       let containerError = null;
       if (contRes.ok) {
-        const payload = await contRes.json();
-        if (payload && payload.error) containerError = payload.error;
+        const payload = await contRes.json().catch(() => null);
+        if (payload && payload.error) containerError = String(payload.error);
         else if (payload && Array.isArray(payload.containers)) containers = payload.containers;
         else containerError = "unexpected /api/containers payload";
-      } else if (contRes.status !== 401 && contRes.status !== 403) {
-        containerError = `Docker stats: HTTP ${contRes.status}`;
+      } else if (contRes.status === 401 || contRes.status === 403) {
+        containerError = "Unauthorized — check the monitor token in the card config.";
+      } else {
+        // The monitor reports daemon problems as {"error": "..."} with a 5xx.
+        const payload = await contRes.json().catch(() => null);
+        containerError =
+          (payload && payload.error) || `Docker stats: HTTP ${contRes.status}`;
       }
 
       return { system, containers, containerError };
