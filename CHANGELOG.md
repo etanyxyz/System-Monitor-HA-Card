@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2
+
+- Docs only: accurate build-from-source monitor setup (there is no published
+  image), Marketplace-first install steps, release/license badges.
+
 ## 0.1.1
 
 - Hide the swap bar when the host has no swap configured (shows “swap disabled”).

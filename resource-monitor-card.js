@@ -28,7 +28,7 @@
 (() => {
   "use strict";
 
-  const CARD_VERSION = "0.1.1";
+  const CARD_VERSION = "0.1.2";
 
   if (customElements.get("resource-monitor-card")) return;
 
