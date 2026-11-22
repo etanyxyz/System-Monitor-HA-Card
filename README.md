@@ -4,6 +4,10 @@ A dependency-free Lovelace card for Home Assistant that shows live host CPU,
 memory, swap and Docker container stats from the
 [System Monitor](https://github.com/etanyxyz/System-Monitor) service.
 
+Want the same data as native Home Assistant sensors (devices, history,
+automations)? Install the companion
+[System Monitor integration](https://github.com/etanyxyz/System-Monitor-HA-Integration).
+
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 
 ![Resource Monitor Card](images/preview.png)
