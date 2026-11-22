@@ -35,9 +35,12 @@ headers, so the browser cannot read the API from a Home Assistant dashboard.
 ### HACS (recommended)
 
 1. HACS → three-dot menu → **Custom repositories**
-2. Add `https://github.com/etanyxyz/System-Monitor-Card` with category **Dashboard**
+2. Add `https://github.com/etanyxyz/System-Monitor-HA-Card` with category **Dashboard**
 3. Install **Resource Monitor Card**, then reload your dashboard (hard-refresh
    the browser with Ctrl/Cmd+Shift+R so the new resource is picked up)
+
+Marketplace: add `https://github.com/etanyxyz/System-Monitor-HA-Card` with
+category **Dashboard** instead.
 
 ### Manual
 

@@ -21,9 +21,9 @@
  *   title: Host                     # optional display title
  *   max_containers: 12              # optional, rows shown (default 12)
  *
- * Install via HACS/Marketplace (plugin category, repo
- * etanyxyz/System-Monitor-Card) or by downloading this file to /local and
- * adding it in Settings > Dashboards > menu > "Add card" > "Resources".
+ * Install via the Marketplace/HACS (dashboard category, repo
+ * etanyxyz/System-Monitor-HA-Card) or by downloading this file to config/www
+ * and adding it under Settings > Dashboards > Resources.
  */
 (() => {
   "use strict";
@@ -758,7 +758,7 @@
     type: CARD_TAG,
     name: "Resource Monitor Card",
     description: "Live host CPU, memory and Docker container stats from the Resource Monitor service.",
-    url: "https://github.com/etanyxyz/System-Monitor-Card",
+    url: "https://github.com/etanyxyz/System-Monitor-HA-Card",
     preview: true,
   });
 })();
